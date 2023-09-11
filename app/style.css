@@ -1,0 +1,8 @@
+* {
+    font-family: sans-serif;
+}
+
+#add-grid {
+    display: grid;
+    grid-template-columns: 1fr 1f;
+}
