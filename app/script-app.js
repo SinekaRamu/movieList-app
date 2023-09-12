@@ -33,6 +33,7 @@ function cardMovieDiv(movie) {
   const div = document.createElement("div");
   const div1 = document.createElement("div");
   const div2 = document.createElement("div");
+  const eidtBox = document.createElement("div");
 
   //adding class attribute to div
   div.setAttribute("class", "movie-card");
@@ -42,6 +43,44 @@ function cardMovieDiv(movie) {
   const id = `movie-${movie["id"]}`;
   div.setAttribute("id", id);
 
+  if (movie.isEdit) {
+    div1.style.display = "none";
+    div2.style.display = "none";
+    const nameInput = document.createElement("input");
+    nameInput.setAttribute("type", "text");
+    nameInput.setAttribute("name", `edit-${movie.id}-name`);
+    nameInput.setAttribute("placeholder", "Enter movie name");
+    nameInput.setAttribute("id", `edit-${movie.id}-name`);
+    nameInput.setAttribute("value", movie.title);
+
+    const yearInput = document.createElement("input");
+    yearInput.setAttribute("type", "number");
+    yearInput.setAttribute("name", `edit-${movie.id}-year`);
+    yearInput.setAttribute("placeholder", "Enter movie year");
+    yearInput.setAttribute("id", `edit-${movie.id}-year`);
+    yearInput.setAttribute("value", movie.releaseDate);
+
+    const updateBtn = document.createElement("button");
+    updateBtn.innerText = "Update";
+
+    updateBtn.addEventListener("click", function () {
+      const newTitle = document.querySelector(`#edit-${movie.id}-name`).value;
+      const newYear = document.querySelector(`#edit-${movie.id}-year`).value;
+
+      const toUpdateIndex = favMovies.findIndex((m) => m.id == movie.id);
+      if (toUpdateIndex != -1) {
+        favMovies[toUpdateIndex]["title"] = newTitle;
+        favMovies[toUpdateIndex]["releaseDate"] = newYear;
+        favMovies[toUpdateIndex]["isEdit"] = false;
+        updateMovieUI();
+        setToLocalStorage();
+      }
+    });
+
+    eidtBox.appendChild(nameInput);
+    eidtBox.appendChild(yearInput);
+    eidtBox.appendChild(updateBtn);
+  }
   // creating img element
   const img = document.createElement("img"); //title
 
@@ -54,6 +93,7 @@ function cardMovieDiv(movie) {
 
   div.appendChild(div1);
   div.appendChild(div2);
+  div.appendChild(eidtBox);
   div1.appendChild(h2);
   div1.appendChild(h3);
   div2.appendChild(img);
@@ -89,11 +129,16 @@ function removeMovie(movieId) {
   const filterArrray = favMovies.filter((movie) => movie.id != movieId);
   favMovies = filterArrray;
   updateMovieUI();
+  setToLocalStorage();
 }
 
 // Function to Edit movie
 function editMovie(movieId) {
-  console.log("edit", movieId);
+  const editIndex = favMovies.findIndex((movie) => movie.id == movieId);
+  if (editIndex != -1) {
+    favMovies[editIndex]["isEdit"] = true;
+    updateMovieUI();
+  }
 }
 
 //function to add form data
