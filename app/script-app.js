@@ -1,38 +1,33 @@
+//Inialize the global vaiable
+const app = document.querySelector("#app-grid");
+
 // create the Array that holds objects, movies list
+let favMovies = [];
 
-let favMovies = [
-  {
-    id: "1694429388189",
-    title: "Luck",
-    releaseDate: "2022",
-  },
-  {
-    id: "1694429446495",
-    title: "Ratatouille",
-    releaseDate: "2007",
-  },
-  {
-    id: "1694429468159",
-    title: "Tom and Jerry",
-    releaseDate: "2021",
-  },
-  {
-    id: "1694429552349",
-    title: "Garfield",
-    releaseDate: "2004",
-  },
-  {
-    id: "1694429655838",
-    title: "Encanto",
-    releaseDate: "2021",
-  },
-  {
-    id: "1694429668222",
-    title: "Moana",
-    releaseDate: "2016",
-  },
-];
+//initial update
+updateForm();
+// updateMovieUI();
+getFromLocalSorage();
 
+//function to display UI
+function updateMovieUI() {
+  clearApp();
+  for (let i = 0; i < favMovies.length; i++) {
+    const movieDiv = cardMovieDiv(favMovies[i]);
+    appendToApp(movieDiv);
+  }
+}
+
+//function to append the html division
+function appendToApp(movieDiv) {
+  app.appendChild(movieDiv);
+}
+
+//function to clear the UI
+function clearApp() {
+  app.innerHTML = "";
+}
+// creating card for movie HTML tags
 function cardMovieDiv(movie) {
   //movie Card div
   const div = document.createElement("div");
@@ -63,14 +58,24 @@ function cardMovieDiv(movie) {
   div1.appendChild(h3);
   div2.appendChild(img);
 
-  //adding button element
-  const newButton = document.createElement("button"); //delete button
-  newButton.textContent = "delete";
-  div1.appendChild(newButton);
+  //adding delete button element
+  const dltBtn = document.createElement("button"); //delete button
+  dltBtn.textContent = "delete";
+  div1.appendChild(dltBtn);
+
+  //adding Edit button element
+  const editBtn = document.createElement("button"); //Edit button
+  editBtn.textContent = "Edit";
+  div1.appendChild(editBtn);
 
   // To delete the division
-  newButton.addEventListener("click", function () {
+  dltBtn.addEventListener("click", function () {
     removeMovie(movie["id"]);
+  });
+
+  // To Edit the division
+  editBtn.addEventListener("click", function () {
+    editMovie(movie["id"]);
   });
 
   return div;
@@ -86,24 +91,9 @@ function removeMovie(movieId) {
   updateMovieUI();
 }
 
-//function to append the html division
-function appendToApp(movieDiv) {
-  const app = document.querySelector("#app-grid");
-  app.appendChild(movieDiv);
-}
-
-//function to clear the UI
-function clearApp() {
-  const app = document.querySelector("#app-grid");
-  app.innerHTML = "";
-}
-//function to display UI
-function updateMovieUI() {
-  clearApp();
-  for (let i = 0; i < favMovies.length; i++) {
-    const movieDiv = cardMovieDiv(favMovies[i]);
-    appendToApp(movieDiv);
-  }
+// Function to Edit movie
+function editMovie(movieId) {
+  console.log("edit", movieId);
 }
 
 //function to add form data
@@ -126,21 +116,41 @@ function createMovieId(name, year) {
     id: new Date().getTime(),
     title: name,
     releaseDate: year,
+    isEdit: false,
   };
 
   const status = document.querySelector("#status");
-  if (!year) {
-    status.innerHTML = "enter value";
+  if (!name) {
+    status.innerText = "Enter Movie Name";
+  } else if (!year) {
+    status.innerText = "Enter release year";
   } else {
+    status.innerText = " ";
+    document.querySelector("#movie-form").reset();
     addMovie(movie);
   }
 }
+
 //function to add movie
 function addMovie(movie) {
   favMovies.push(movie);
   updateMovieUI();
+  setToLocalStorage();
 }
 
-//initial update
-updateMovieUI();
-updateForm();
+// function to save data in local storage
+function setToLocalStorage() {
+  const str = JSON.stringify(favMovies);
+  localStorage.setItem("movie-list", str);
+}
+
+// Function to get data from localStorage
+function getFromLocalSorage() {
+  const str = localStorage.getItem("movie-list");
+  if (!str) {
+    favMovies = [];
+  } else {
+    favMovies = JSON.parse(str);
+  }
+  updateMovieUI();
+}
