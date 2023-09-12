@@ -22,26 +22,6 @@ let favMovies = [
     releaseDate: "2004",
   },
   {
-    id: "1694429606142",
-    title: "Stuart Little",
-    releaseDate: "1999",
-  },
-  {
-    id: "1694429617086",
-    title: "Narnia 1",
-    releaseDate: "2005",
-  },
-  {
-    id: "1694429627679",
-    title: "Narnia 2",
-    releaseDate: "2008",
-  },
-  {
-    id: "1694429639358",
-    title: "Narnia 3",
-    releaseDate: "2010",
-  },
-  {
     id: "1694429655838",
     title: "Encanto",
     releaseDate: "2021",
@@ -90,18 +70,77 @@ function cardMovieDiv(movie) {
 
   // To delete the division
   newButton.addEventListener("click", function () {
-    div.remove();
+    removeMovie(movie["id"]);
   });
 
   return div;
 }
 
+//Function to remove movie
+function removeMovie(movieId) {
+  // const filterArrray = favMovies.filter(function(movie){
+  //   return movie.id != movieId
+  // })
+  const filterArrray = favMovies.filter((movie) => movie.id != movieId);
+  favMovies = filterArrray;
+  updateMovieUI();
+}
+
+//function to append the html division
 function appendToApp(movieDiv) {
   const app = document.querySelector("#app-grid");
   app.appendChild(movieDiv);
 }
 
-for (let i = 0; i < favMovies.length; i++) {
-  const movieDiv = cardMovieDiv(favMovies[i]);
-  appendToApp(movieDiv);
+//function to clear the UI
+function clearApp() {
+  const app = document.querySelector("#app-grid");
+  app.innerHTML = "";
 }
+//function to display UI
+function updateMovieUI() {
+  clearApp();
+  for (let i = 0; i < favMovies.length; i++) {
+    const movieDiv = cardMovieDiv(favMovies[i]);
+    appendToApp(movieDiv);
+  }
+}
+
+//function to add form data
+function updateForm() {
+  const form = document.querySelector("#movie-form");
+  form.addEventListener("submit", function (r) {
+    r.preventDefault();
+
+    // fetch form data
+    const name = document.querySelector("#movieName").value;
+    const year = document.querySelector("#movieYear").value;
+
+    createMovieId(name, year);
+  });
+}
+
+//function to add moive elements
+function createMovieId(name, year) {
+  const movie = {
+    id: new Date().getTime(),
+    title: name,
+    releaseDate: year,
+  };
+
+  const status = document.querySelector("#status");
+  if (!year) {
+    status.innerHTML = "enter value";
+  } else {
+    addMovie(movie);
+  }
+}
+//function to add movie
+function addMovie(movie) {
+  favMovies.push(movie);
+  updateMovieUI();
+}
+
+//initial update
+updateMovieUI();
+updateForm();

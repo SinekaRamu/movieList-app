@@ -24,6 +24,27 @@ button:hover{
     background-color: #EEE0C9;
 }
 
+/* Form for movies */
+#movie-form {
+    padding: 20px;
+    text-align: center;
+    font-size: larger;
+}
+
+.form-element {
+    margin: 20px;
+    
+}
+
+#submit-btn {
+    padding: 5px 10px;
+    font-size: large;
+    color: #fff;
+    background-color: #333;
+    border-radius: 8px;
+    border: none;
+}
+/* Grid for movie Card */
 #app-grid {
     
     padding: 20px;

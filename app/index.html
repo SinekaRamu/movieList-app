@@ -9,6 +9,19 @@
   </head>
 
   <body>
+    <form id="movie-form">
+      <div class="form-element">
+        <label for="movieName">Movie Name : </label>
+        <input id="movieName" type="text" placeholder="Enter Movie Name" />
+      </div>
+      <div class="form-element">
+        <label for="movieYear">Movie Year : </label>
+        <input id="movieYear" type="number" placeholder="Enter release Year" />
+      </div>
+
+      <input type="submit" value="add-movie" id="submit-btn" />
+      <div id="status"></div>
+    </form>
     <div id="app-grid">
       <!-- 
         Main Division which containers
