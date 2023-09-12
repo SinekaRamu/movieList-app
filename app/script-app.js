@@ -38,6 +38,7 @@ function cardMovieDiv(movie) {
   //adding class attribute to div
   div.setAttribute("class", "movie-card");
   div2.setAttribute("class", "imageBox");
+  eidtBox.setAttribute("class", "edit-box");
 
   //adding id attribute to div
   const id = `movie-${movie["id"]}`;
@@ -91,7 +92,7 @@ function cardMovieDiv(movie) {
   const h3 = document.createElement("h3"); //realease date
   h3.innerText = movie["releaseDate"];
 
-  div.appendChild(div1);
+  div.appendChild(div1); //.appendChild(div2).appendChild(eidtBox);
   div.appendChild(div2);
   div.appendChild(eidtBox);
   div1.appendChild(h2);
@@ -146,35 +147,36 @@ function updateForm() {
   const form = document.querySelector("#movie-form");
   form.addEventListener("submit", function (r) {
     r.preventDefault();
-
-    // fetch form data
-    const name = document.querySelector("#movieName").value;
-    const year = document.querySelector("#movieYear").value;
-
-    createMovieId(name, year);
+    createMovieId();
   });
 }
 
 //function to add moive elements
-function createMovieId(name, year) {
+function createMovieId() {
+  // fetch form data
+  const name = document.querySelector("#movieName").value;
+  const year = document.querySelector("#movieYear").value;
+
   const movie = {
     id: new Date().getTime(),
     title: name,
     releaseDate: year,
     isEdit: false,
   };
-
   const status = document.querySelector("#status");
-  if (!name) {
-    status.innerText = "Enter Movie Name";
-  } else if (!year) {
-    status.innerText = "Enter release year";
+  if (!name || !year) {
+    status.innerText = "Enter data";
+  } else if (year < 1500 || year > 2023) {
+    status.innerText = "Enter valid year";
   } else {
     status.innerText = " ";
     document.querySelector("#movie-form").reset();
     addMovie(movie);
   }
 }
+
+//function to check the given data
+// function statusValidate(movie) {}
 
 //function to add movie
 function addMovie(movie) {

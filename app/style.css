@@ -26,6 +26,7 @@ button:hover{
 
 input {
     border: none;
+    margin-left: 10px;
 }
 /* Form for movies */
 #movie-form {
@@ -51,6 +52,17 @@ input {
 #status {
     color: #777;
     padding: 10px;
+}
+/* Edit Box division */
+.edit-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-box input {
+    margin: 10px;
+    padding: 5px 10px;
+    border-radius: 8px;
 }
 /* Grid for movie Card */
 #app-grid {
