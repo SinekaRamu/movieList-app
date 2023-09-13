@@ -6,7 +6,6 @@ let favMovies = [];
 
 //initial update
 updateForm();
-// updateMovieUI();
 getFromLocalSorage();
 
 //function to display UI
@@ -65,17 +64,7 @@ function cardMovieDiv(movie) {
     updateBtn.innerText = "Update";
 
     updateBtn.addEventListener("click", function () {
-      const newTitle = document.querySelector(`#edit-${movie.id}-name`).value;
-      const newYear = document.querySelector(`#edit-${movie.id}-year`).value;
-
-      const toUpdateIndex = favMovies.findIndex((m) => m.id == movie.id);
-      if (toUpdateIndex != -1) {
-        favMovies[toUpdateIndex]["title"] = newTitle;
-        favMovies[toUpdateIndex]["releaseDate"] = newYear;
-        favMovies[toUpdateIndex]["isEdit"] = false;
-        updateMovieUI();
-        setToLocalStorage();
-      }
+      updatingMovie(movie.id);
     });
 
     eidtBox.appendChild(nameInput);
@@ -129,7 +118,6 @@ function removeMovie(movieId) {
   // })
   const filterArrray = favMovies.filter((movie) => movie.id != movieId);
   favMovies = filterArrray;
-  updateMovieUI();
   setToLocalStorage();
 }
 
@@ -142,6 +130,25 @@ function editMovie(movieId) {
   }
 }
 
+//function to update the edited movie
+function updatingMovie(movieId) {
+  const newTitle = document.querySelector(`#edit-${movieId}-name`).value;
+  const newYear = document.querySelector(`#edit-${movieId}-year`).value;
+
+  const toUpdateIndex = favMovies.findIndex((m) => m.id == movieId);
+  if (toUpdateIndex != -1) {
+    favMovies[toUpdateIndex]["title"] = newTitle;
+    favMovies[toUpdateIndex]["releaseDate"] = newYear;
+    favMovies[toUpdateIndex]["isEdit"] = false;
+    if (!newTitle || !newYear) {
+      alert("Enter value");
+    } else if (newYear < 1500 || newYear > 2023) {
+      alert("enter valid data");
+    } else {
+      setToLocalStorage();
+    }
+  }
+}
 //function to add form data
 function updateForm() {
   const form = document.querySelector("#movie-form");
@@ -157,12 +164,11 @@ function createMovieId() {
   const name = document.querySelector("#movieName").value;
   const year = document.querySelector("#movieYear").value;
 
-  const movie = {
-    id: new Date().getTime(),
-    title: name,
-    releaseDate: year,
-    isEdit: false,
-  };
+  statusValidate(name, year);
+}
+
+//function to check the given data
+function statusValidate(name, year) {
   const status = document.querySelector("#status");
   if (!name || !year) {
     status.innerText = "Enter data";
@@ -171,17 +177,19 @@ function createMovieId() {
   } else {
     status.innerText = " ";
     document.querySelector("#movie-form").reset();
+    const movie = {
+      id: new Date().getTime(),
+      title: name,
+      releaseDate: year,
+      isEdit: false,
+    };
     addMovie(movie);
   }
 }
 
-//function to check the given data
-// function statusValidate(movie) {}
-
 //function to add movie
 function addMovie(movie) {
   favMovies.push(movie);
-  updateMovieUI();
   setToLocalStorage();
 }
 
@@ -189,6 +197,7 @@ function addMovie(movie) {
 function setToLocalStorage() {
   const str = JSON.stringify(favMovies);
   localStorage.setItem("movie-list", str);
+  updateMovieUI();
 }
 
 // Function to get data from localStorage
