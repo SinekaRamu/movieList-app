@@ -143,7 +143,7 @@ function updatingMovie(movieId) {
     if (!newTitle || !newYear) {
       alert("Enter value");
     } else if (newYear < 1500 || newYear > 2023) {
-      alert("enter valid data");
+      alert("Enter valid data");
     } else {
       setToLocalStorage();
     }

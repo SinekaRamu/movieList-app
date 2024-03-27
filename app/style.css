@@ -1,111 +1,110 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins:wght@500&display=swap");
 
 * {
-    margin: 0;
-    padding: 0;
-    font-family: 'Montserrat','poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", "poppins", sans-serif;
 }
 
-body{
-    background-color: #F1F0E8;
+body {
+  background-color: #f1f0e8;
 }
-h2,h3 {
-    padding: 5px 0;
+h1 {
+  padding: 10px;
+}
+h2,
+h3 {
+  padding: 5px 0;
 }
 button {
-    margin: 5px;
-    padding: 5px 10px;
-    background-color: #F1F0E8;
-    border: none;
-    border-radius: 8px
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #f1f0e8;
+  border: none;
+  border-radius: 8px;
 }
 
-button:hover{
-    background-color: #EEE0C9;
+button:hover {
+  background-color: #eee0c9;
 }
 
 input {
-    border: none;
-    margin-left: 10px;
+  font-size: larger;
+  margin-left: 10px;
+  border: none;
 }
 /* Form for movies */
 #movie-form {
-    padding: 20px;
-    text-align: center;
-    font-size: larger;
+  text-align: center;
+  font-size: larger;
 }
 
 .form-element {
-    margin: 20px;
-    
+  margin: 30px 0;
 }
 
 #submit-btn {
-    padding: 5px 10px;
-    font-size: large;
-    color: #fff;
-    background-color: #333;
-    border-radius: 8px;
-    border: none;
+  padding: 5px 10px;
+  font-size: large;
+  color: #fff;
+  background-color: #333;
+  border-radius: 8px;
+  border: none;
 }
 
 #status {
-    color: #777;
-    padding: 10px;
+  color: #777;
+  padding: 10px;
 }
 /* Edit Box division */
 .edit-box {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .edit-box input {
-    margin: 10px;
-    padding: 5px 10px;
-    border-radius: 8px;
+  margin: 10px;
+  padding: 5px 10px;
+  border-radius: 8px;
 }
 /* Grid for movie Card */
 #app-grid {
-    
-    padding: 20px;
-    display: grid;
-    grid-template-columns: auto auto auto;
-    gap: 50px;
-    text-align: center;
-    
+  padding: 20px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 50px;
+  text-align: center;
 }
 
 .movie-card {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #ADC4CE;
-    border: 2px solid #96B6C5;
-    border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #adc4ce;
+  border: 2px solid #96b6c5;
+  border-radius: 10px;
 }
 
 .imageBox {
-    width: 100px;
-    height: 150px;
-    background-color: #EEE0C9;
+  width: 100px;
+  height: 150px;
+  background-color: #eee0c9;
 }
 
-#movie-1694429388189 img{  
-    /* background-position: center;  */
-    background-repeat: no-repeat;
-    background-image: url('assets/Luck_\(2022\)_poster.png');
+#movie-1694429388189 img {
+  /* background-position: center;  */
+  background-repeat: no-repeat;
+  background-image: url("assets/Luck_\(2022\)_poster.png");
 }
 
-@media (max-width:1280px) {
-    #app-grid {
-        grid-template-columns: auto auto;
-
-    }
+@media (max-width: 1280px) {
+  #app-grid {
+    grid-template-columns: auto auto;
+  }
 }
 
-@media (max-width:600px) {
-    #app-grid {
-        grid-template-columns: auto;
-
-    }
+@media (max-width: 600px) {
+  #app-grid {
+    grid-template-columns: auto;
+  }
 }
